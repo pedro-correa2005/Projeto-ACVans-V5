@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./Backend/projetoAcVansV5
+      dockerfile: Dockerfile.dev
+
+    working_dir: /workspace
+
+    command:
+      - mvn
+      - -B
+      - spring-boot:run
+      - "-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+
+    volumes:
+      - ./Backend/projetoAcVansV5:/workspace
+      - maven_cache:/root/.m2
+
+    ports:
+      - "127.0.0.1:5005:5005"
+
+    environment:
+      AMBIENTE_ATIVO: dev
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+      SPRING_DEVTOOLS_RESTART_POLL_INTERVAL: 2s
+      SPRING_DEVTOOLS_RESTART_QUIET_PERIOD: 1s
+
+volumes:
+  maven_cache:
