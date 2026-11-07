@@ -1,3 +1,9 @@
+DB_ROOT_PASSWORD
+DB_NAME
+DB_USER
+DB_PASSWORD
+DB_URL
+
 IP_FRONTEND
 URL_SITE
 
@@ -6,17 +12,9 @@ Algumas configurações da aplicação mudam se ela estiver rodando num servidor
 
 CHAVE_JWT_ACESSO
 CHAVE_JWT_REFRESH
-Chaves de criptografia, não podem estar hardcoded no código
-
-MARIADB_IP_PORT
-ip e porta do banco
-MARIADB_PASSWORD
-Senha do banco
 
 REDIS_HOST_IP
-ip do redis
 REDIS_PORT
-porta do redis
 
 API_URL
 link da api
