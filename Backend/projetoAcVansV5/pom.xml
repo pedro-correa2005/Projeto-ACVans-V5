@@ -15,7 +15,7 @@
 	<artifactId>projetoAcVansV4</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>ProjetoAcVans</name>
 	<description>Projeto para rastreamento de serviços de oficina</description>
