@@ -1,6 +1,9 @@
-DROP DATABASE IF EXISTS bdacvans;
-CREATE DATABASE bdacvans;
 USE bdacvans;
+
+GRANT SELECT, INSERT, UPDATE, DELETE 
+ON bdacvans.* 
+TO 'acvans_user'@'%';
+FLUSH PRIVILEGES;
 
 CREATE TABLE oficina(
 	id_oficina INT PRIMARY KEY AUTO_INCREMENT,
