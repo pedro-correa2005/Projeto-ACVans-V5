@@ -1,0 +1,40 @@
+services:
+    mariadb:
+        image: mariadb:11
+        container_name: mariadb_acvans
+        restart: unless-stopped
+
+        environment:
+            MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+            MARIADB_DATABASE: ${DB_NAME}
+            MARIADB_USER: ${DB_USER}
+            MARIADB_USER_PASSWORD: ${DB_PASSWORD}
+        
+        ports:
+            - "3306:3306"
+        
+        volumes:
+            - mariadb_data:/var/lib/mysql
+
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+    
+    redis:
+        image: redis:7
+        container_name: redis_acvans
+        restart: unless-stopped
+
+        ports:
+            - "6379:6379"
+
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+    
+volumes:
+    mariadb_data:
