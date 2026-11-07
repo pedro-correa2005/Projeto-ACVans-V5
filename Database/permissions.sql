@@ -1,0 +1,9 @@
+USE bdacvans;
+
+REVOKE ALL PRIVILEGES, GRANT OPTION
+FROM 'acvans_user'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE 
+ON bdacvans.*
+TO 'acvans_user'@'%';
+FLUSH PRIVILEGES;
