@@ -1,10 +1,5 @@
 USE bdacvans;
 
-GRANT SELECT, INSERT, UPDATE, DELETE 
-ON bdacvans.* 
-TO 'acvans_user'@'%';
-FLUSH PRIVILEGES;
-
 CREATE TABLE oficina(
 	id_oficina INT PRIMARY KEY AUTO_INCREMENT,
    nome VARCHAR(100) NOT NULL UNIQUE,
@@ -53,7 +48,7 @@ CREATE TABLE auditoria(
 CREATE TABLE cliente (
 	id_cliente BIGINT PRIMARY KEY AUTO_INCREMENT,
    nome VARCHAR(50) NOT NULL,
-   celular VARCHAR(14) NOT NULL,
+   celular VARCHAR(20) NOT NULL,
    fk_oficina INT NOT NULL,
    FOREIGN KEY (fk_oficina) REFERENCES oficina(id_oficina) ON DELETE CASCADE
 );
@@ -206,6 +201,13 @@ CREATE TRIGGER trg_upper_placa
 	FOR EACH ROW
 	BEGIN
 	  SET NEW.placa = UPPER(NEW.placa);
+END$$
+
+CREATE TRIGGER trg_upper_placa_bu
+BEFORE UPDATE ON veiculo
+FOR EACH ROW
+BEGIN
+    SET NEW.placa = UPPER(NEW.placa);
 END$$
 
 DELIMITER ;
