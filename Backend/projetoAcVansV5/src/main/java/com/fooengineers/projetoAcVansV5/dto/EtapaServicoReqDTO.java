@@ -1,0 +1,16 @@
+package com.fooengineers.projetoAcVansV5.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class EtapaServicoReqDTO {
+	@NotBlank(message="Titulo é obrigatorio")
+	private String titulo;
+	@NotBlank(message="Descrição obrigatória")
+	private String descricao;
+}

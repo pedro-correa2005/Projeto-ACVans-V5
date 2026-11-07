@@ -1,0 +1,15 @@
+package com.fooengineers.projetoAcVansV5.exception;
+
+public class StatusServicoNaoEncontradoException extends RuntimeException {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public StatusServicoNaoEncontradoException(Integer idStatus) {
+		super("Não foi possível encontrar status de serviço com id " + idStatus);
+	}
+	public StatusServicoNaoEncontradoException(String descricao) {
+		super("Não foi possível encontrar status de serviço com descricao " + descricao);
+	}
+}

@@ -1,0 +1,19 @@
+package com.fooengineers.projetoAcVansV5.auditoria.entity;
+
+public enum Entidade {
+	USUARIO("usuario"),
+	CLIENTE("Cliente"), 
+	VEICULO("Veículo"), 
+	TIPO_SERVICO("Tipo de Serviço"),
+	ETAPA_SERVICO("Etapa de Serviço"),
+	SERVICO("Servico");
+	
+	private String descricao;
+	Entidade(String descricao){
+		this.descricao = descricao;
+	}
+	
+	public String getDescricao() {
+		return this.descricao;
+	}
+}
