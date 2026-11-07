@@ -36,5 +36,43 @@ services:
             timeout: 5s
             retries: 5
     
+    backend:
+        container_name: backend_acvans
+        build:
+            context: ./Backend/projetoAcVansV5
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        ports:
+            - "8080:8080"
+        environment:
+            DB_URL: ${DB_URL}
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            
+            DB_MIGRATION_USER: ${DB_MIGRATION_USER}
+            DB_MIGRATION_PASSWORD: ${DB_MIGRATION_PASSWORD}
+
+            REDIS_HOST: ${REDIS_HOST}
+            REDIS_PORT: ${REDIS_PORT}
+
+            EMAIL_USERNAME: ${EMAIL_USERNAME}
+            EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+
+            AMBIENTE_ATIVO: ${AMBIENTE_ATIVO}
+            
+            CHAVE_JWT_ACESSO: ${CHAVE_JWT_ACESSO}
+            CHAVE_JWT_REFRESH: ${CHAVE_JWT_REFRESH}
+
+            Z-API_CLIENT_TOKEN: ${Z-API_CLIENT_TOKEN}
+            Z-API_INSTANCE_ID: ${Z-API_INSTANCE_ID}
+            Z-API_INSTANCE_TOKEN: ${Z-API_INSTANCE_TOKEN}
+
+            URL_SITE: ${URL_SITE}
+
+        depends_on:
+            mariadb:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
 volumes:
     mariadb_data:
