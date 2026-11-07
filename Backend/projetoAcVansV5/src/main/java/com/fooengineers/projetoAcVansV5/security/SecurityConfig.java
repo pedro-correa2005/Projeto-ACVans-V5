@@ -30,7 +30,7 @@ public class SecurityConfig {
 	private CsrfFilter csrfFilter;
 	@Autowired
 	JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-	@Value("${frontend.ip}") 
+	@Value("${app.base-url}") 
 	private String frontendIp;
 	
 	@Bean
