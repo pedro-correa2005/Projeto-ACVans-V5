@@ -55,6 +55,8 @@ services:
             REDIS_HOST: ${REDIS_HOST}
             REDIS_PORT: ${REDIS_PORT}
 
+            ADM_EMAIL_LIST: ${ADM_EMAIL_LIST}
+
             EMAIL_USERNAME: ${EMAIL_USERNAME}
             EMAIL_PASSWORD: ${EMAIL_PASSWORD}
 
