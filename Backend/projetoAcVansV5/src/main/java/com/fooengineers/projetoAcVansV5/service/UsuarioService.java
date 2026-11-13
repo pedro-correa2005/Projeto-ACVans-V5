@@ -32,14 +32,17 @@ import com.fooengineers.projetoAcVansV5.util.SenhaUtil;
 public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 	@Autowired
 	private OficinaRepository oficinaRepository;
 	@Autowired
 	private RoleRepository roleRepository;
 	@Autowired
 	private SmtpEmailService emailService;
+	
+	public UsuarioService(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
+	}
 	
 	public Page<UsuarioResDTO> listarPorOficina(Long idOficina, String param, Pageable pageable){
 		return usuarioRepository.findAll(UsuarioSpecification.filtroGeral(idOficina, param), pageable).map(UsuarioResDTO::new);
