@@ -32,6 +32,8 @@ public class SecurityConfig {
 	JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	@Value("${app.base-url}") 
 	private String frontendIp;
+	@Value("${app.adm-email-list}") 
+	private List<String> admins;
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -93,8 +95,6 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
-	
-	
 	@Bean
 	public CorsConfigurationSource cosrConfigurationSource() {
 		CorsConfiguration config =
@@ -132,4 +132,14 @@ public class SecurityConfig {
 
         return source;
 	}	
+	
+	@Bean
+	CommandLineRunner init(UsuarioService service) {
+	    return args -> {
+	    	for (String email : admins) {
+	    		System.out.println(email);
+				service.criarAdmin(email);
+			}
+	    };
+	}
 }
