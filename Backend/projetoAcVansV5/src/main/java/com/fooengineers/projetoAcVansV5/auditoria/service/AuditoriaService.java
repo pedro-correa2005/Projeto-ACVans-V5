@@ -19,6 +19,7 @@ import com.fooengineers.projetoAcVansV5.auditoria.entity.Entidade;
 import com.fooengineers.projetoAcVansV5.auditoria.repository.AuditoriaRepository;
 import com.fooengineers.projetoAcVansV5.entity.Oficina;
 import com.fooengineers.projetoAcVansV5.entity.Usuario;
+import com.fooengineers.projetoAcVansV5.exception.UsuarioNaoEncontradoException;
 import com.fooengineers.projetoAcVansV5.repository.UsuarioRepository;
 import com.fooengineers.projetoAcVansV5.util.IpUtil;
 
@@ -79,7 +80,7 @@ public class AuditoriaService {
 		auditoriaRepository.save(auditoria);
 	}
 	public void registrarLoginFail(String email) {
-		Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(null);
+		Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new UsuarioNaoEncontradoException(email));
 		if(usuario == null) {
 			return;
 		}
