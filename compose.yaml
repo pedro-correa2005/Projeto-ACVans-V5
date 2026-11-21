@@ -76,5 +76,16 @@ services:
                 condition: service_healthy
             redis:
                 condition: service_healthy
+    frontend:
+        container_name: frontend_acvans
+        build:
+            context: ./Frontend/acvans-front
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        ports:
+            - "8081:80"
+        depends_on:
+            backend:
+                condition: service_started
 volumes:
     mariadb_data:
