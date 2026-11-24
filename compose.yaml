@@ -24,6 +24,9 @@ services:
         image: redis:7
         container_name: redis_acvans
         restart: unless-stopped
+        volumes:
+            - redis_data:/data
+        command: redis-server --appendonly yes
 
         healthcheck:
             test: ["CMD", "redis-cli", "ping"]
@@ -80,6 +83,7 @@ services:
             - "80:80"
         depends_on:
             backend:
-                condition: service_started
+                condition: service_healthy
 volumes:
     mariadb_data:
+    redis_data:
