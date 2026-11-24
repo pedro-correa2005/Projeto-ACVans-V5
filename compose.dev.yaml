@@ -1,4 +1,11 @@
+#compose.dev.yaml
 services:
+  mariadb:
+    ports:
+      - "127.0.0.1:3306:3306"
+  redis:
+    ports:
+      - "127.0.0.1:6379:6379"
   backend:
     build:
       context: ./Backend/projetoAcVansV5
@@ -18,6 +25,7 @@ services:
 
     ports:
       - "127.0.0.1:5005:5005"
+      - "8080:8080"
 
     environment:
       AMBIENTE_ATIVO: dev
