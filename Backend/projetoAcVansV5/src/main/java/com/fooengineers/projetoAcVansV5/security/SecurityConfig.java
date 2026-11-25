@@ -137,7 +137,6 @@ public class SecurityConfig {
 	CommandLineRunner init(UsuarioService service) {
 	    return args -> {
 	    	for (String email : admins) {
-	    		System.out.println(email);
 				service.criarAdmin(email);
 			}
 	    };
