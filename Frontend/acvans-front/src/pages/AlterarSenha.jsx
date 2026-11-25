@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
@@ -10,12 +9,9 @@ import PasswordRequirements from "../components/PasswordRequirements";
 
 import { validatePassword } from "../utils/passwordValidator";
 import { alterarSenha } from "../services/authService";
-import { useAuth } from "../context/authContext";
-
-import { getHomeByRole } from "../utils/roleUtils";
+import { useAuth } from "../context/useAuth";
 
 function AlterarSenha(){
-    const navigate = useNavigate();
 
     const { user, logout } = useAuth();
 

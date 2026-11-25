@@ -1,5 +1,4 @@
 import AutoCompleteInput from "../input/AutoCompleteInput";
-import PlacaInput from "../input/PlacaInput";
 import { listarVeiculos } from "../../services/veiculoService";
 import { useEffect, useState } from "react";
 import { listarTiposServico } from "../../services/tiposServicoService";
@@ -27,8 +26,13 @@ function ServicoForm({ tipoServico, setTipoServico, receberNotificacao, setReceb
     }
 
     useEffect(() => {
-        carregarTipos();
-        carregarStatus();
+        const carregarDados = async () => {
+            await Promise.all([
+                carregarTipos(),
+                carregarStatus()
+            ]);
+        };
+        carregarDados();
     }, []);
 
     return (

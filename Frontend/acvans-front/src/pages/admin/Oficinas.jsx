@@ -91,9 +91,25 @@ function Oficinas() {
             console.error(error);
         }
     }
-
+    
     useEffect(() => {
-        carregar();
+        let ativo = true;
+        const executar = async () => {
+            try {
+                const data = await listarOficinas(termo, pageNumber, 10,`${sortField},${sortDirection}`);
+                if(!ativo) return;
+                setPage(data);
+            } catch (error) {
+                if(ativo){
+                    console.error(error);
+                }
+            }
+            
+        }
+        executar();
+        return () => {
+            ativo = false;
+        }
     }, [termo, pageNumber, sortField, sortDirection]);
 
     useEffect(() => {

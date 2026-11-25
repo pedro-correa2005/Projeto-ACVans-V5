@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import DataTable from "../components/table/DataTable";
 import SearchBar from "../components/search/SearchBar";
@@ -32,19 +32,48 @@ function Clientes(){
     const [nome, setNome] = useState("");
     const [celular, setCelular] = useState(false);
 
-    async function carregar(){
+    const carregar = useCallback(async () => {
         try {
-            const data = await listarClientes(termo, pageNumber, 10, `${sortField},${sortDirection}`);
+            const data = await listarClientes(
+                termo,
+                pageNumber,
+                10,
+                `${sortField},${sortDirection}`
+            );
+
             setPage(data);
         } catch (error) {
             console.error(error);
         }
-    }
-
-    useEffect(() => {
-        carregar();
     }, [termo, pageNumber, sortField, sortDirection]);
 
+    useEffect(() => {
+        let ativo = true;
+
+        async function buscar() {
+            try {
+                const data = await listarClientes(
+                    termo,
+                    pageNumber,
+                    10,
+                    `${sortField},${sortDirection}`
+                );
+
+                if (ativo) {
+                    setPage(data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        buscar();
+
+        return () => {
+            ativo = false;
+        };
+    }, [termo, pageNumber, sortField, sortDirection]);
+    
     useEffect(() => {
         const timeout = setTimeout(() => {
             setPageNumber(0);

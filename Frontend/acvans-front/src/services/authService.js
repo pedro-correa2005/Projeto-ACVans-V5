@@ -30,8 +30,8 @@ export async function me() {
     try{
         const response = await api.get("/auth/me");
         return response.data;
-    }catch(error){
-        setUser(null);
+    }catch{
+        console.error("Erro")
     }
 }
 

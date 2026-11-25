@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
     useLocation,
-    useNavigate,
     Navigate
 } from "react-router-dom";
 
@@ -19,12 +18,11 @@ import {
 
 import {
     useAuth
-} from "../context/authContext";
+} from "../context/useAuth";
 
 import { getHomeByRole } from "../utils/roleUtils";
 
 function TwoFactor(){
-    const navigate = useNavigate();
 
     const location = useLocation();
 

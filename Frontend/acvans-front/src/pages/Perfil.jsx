@@ -1,6 +1,5 @@
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/useAuth";
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getRoleLabel } from "../utils/roleUtils";
 import { ativar2FA, desativar2FA } from "../services/authService";
@@ -11,7 +10,7 @@ import Footer from "../components/Footer";
 
 function Perfil() {
     const {
-        user, logout, refreshUser
+        user, logout
     } = useAuth();
 
     const [loading2FA, setLoading2FA] = useState(false);
@@ -23,10 +22,10 @@ function Perfil() {
         try {
             setLoading2FA(true);
             if (user?.doisFatores) {
-                const response = await desativar2FA();
+                await desativar2FA();
                 toast.success("Autenticação de dois fatores desativada");
             } else {
-                const response = await ativar2FA();
+                await ativar2FA();
                 toast.success("Autenticação de dois fatores ativada");
             }
             await logout();

@@ -1,6 +1,5 @@
 import {
     createContext,
-    useContext,
     useEffect,
     useState
 } from "react";
@@ -11,7 +10,7 @@ import {
     me
 } from "../services/authService";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export function AuthProvider({
     children
@@ -26,6 +25,7 @@ export function AuthProvider({
                 const usuario = await me();
                 setUser(usuario);
             } catch (error) {
+                console.error(error)
                 setUser(null);
             } finally { 
                 setLoading(false);
@@ -80,11 +80,5 @@ export function AuthProvider({
         >
             {children}
         </AuthContext.Provider>
-    );
-}
-
-export function useAuth(){
-    return useContext(
-        AuthContext
     );
 }

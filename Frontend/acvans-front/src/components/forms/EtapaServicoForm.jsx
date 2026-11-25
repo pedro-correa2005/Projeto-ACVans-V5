@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function EtapaServicoForm({titulo, setTitulo, descricao, setDescricao}){
     return (
         <>

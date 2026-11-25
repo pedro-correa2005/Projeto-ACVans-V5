@@ -8,7 +8,7 @@ export function hasRole(user, role){
     );
 }
 
-export function hasAnyRole(user, roles){
+export function hasAnyRole(user){
     if(!user){
         return false;
     }

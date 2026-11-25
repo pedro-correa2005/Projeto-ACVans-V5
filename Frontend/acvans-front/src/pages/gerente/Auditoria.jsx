@@ -14,7 +14,6 @@ import Footer from "../../components/Footer.jsx";
 function Auditoria() {
     const [page, setPage] = useState(null);
     const [pageNumber, setPageNumber] = useState(0);
-    const [loading, setLoading] = useState(false);
     const [sortField, setSortField] = useState("tempo");
     const [sortDirection, setSortDirection] = useState("desc");
     const [showModal, setShowModal] = useState(false);
@@ -23,18 +22,24 @@ function Auditoria() {
     const [detalhesDepois, setDetalhesDepois] = useState([]);
     const [colunasModal, setColunasModal] = useState(null);
 
-
-    async function carregar() {
-        try {
-            const data = await getAuditoria(pageNumber, 20, `${sortField},${sortDirection}`);
-            setPage(data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
+    
     useEffect(() => {
-        carregar();
+        let ativo = true
+        const executar = async () => {
+            try {
+                const data = await getAuditoria(pageNumber, 20, `${sortField},${sortDirection}`);
+                if(!ativo) return;
+                setPage(data);
+            } catch (error) {
+                if(ativo){
+                    console.error(error);
+                }
+            }
+        };
+        executar();
+        return () => {
+            ativo = false;
+        }
     }, [pageNumber, sortField, sortDirection]);
 
     async function handleSort(field) {

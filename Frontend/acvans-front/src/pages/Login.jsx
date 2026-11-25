@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 
 import {
   useAuth
-} from "../context/authContext";
+} from "../context/useAuth";
 
 import { getHomeByRole } from "../utils/roleUtils";
 

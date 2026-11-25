@@ -12,7 +12,7 @@ import ServicoForm from "../components/forms/ServicoForm.jsx";
 import { FaEdit, FaTrash, FaQrcode } from "react-icons/fa";
 
 import { toast } from "react-toastify";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
@@ -51,8 +51,25 @@ function DetalhesVeiculo() {
     }
 
     useEffect(() => {
-        carregar();
-    }, [termo, pageNumber, sortField, sortDirection]);
+        let ativo = true;
+        const executar = async () => {
+            try {
+                const dataServicos = await listarServicoPorVeiculo(idVeiculo, termo, pageNumber, 10, `${sortField},${sortDirection}`);
+                setPage(dataServicos);
+                const veiculoData = await buscarVeiculo(idVeiculo);
+                if(!ativo) return;
+                setVeiculo(veiculoData);
+            } catch (error) {
+                if (ativo) {
+                    console.error(error);
+                }
+            }
+        };
+        executar();
+        return () => {
+            ativo = false;
+        };
+    }, [termo, pageNumber, sortField, sortDirection, idVeiculo]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {

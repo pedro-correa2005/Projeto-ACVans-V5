@@ -33,7 +33,7 @@ function ConfigurarServicos() {
     const [tipoDescricao, setTipoDescricao] = useState("");
 
     const [etapaTitulo, setEtapaTitulo] = useState("");
-    const [etapaOrdem, setEtapaOrdem] = useState(null);
+    const [setEtapaOrdem] = useState(null);
     const [etapaDescricao, setEtapaDescricao] = useState("");
     const [idTipoServico, setIdTipoServico] = useState(null)
 
@@ -51,9 +51,30 @@ function ConfigurarServicos() {
             console.error(error);
         }
     }
-
+    
     useEffect(() => {
-        carregar();
+        let ativo = true;
+        const executar = async () => {
+            try {
+                const dataTipos = await listarTiposServico();
+                const tiposComEtapas = await Promise.all(
+                    dataTipos.map(async (tipo) => {
+                        const etapas = await listarEtapasServico(tipo.id);
+                        return { ...tipo, etapas };
+                    })
+                );
+                if(!ativo) return;
+                setListaTipos(tiposComEtapas);
+            } catch (error) {
+                if(ativo){
+                    console.error(error);
+                }
+            }
+        };
+        executar();
+        return () => {
+            ativo = false;
+        };
     }, [])
 
     async function salvarTipo() {

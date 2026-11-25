@@ -28,15 +28,15 @@ function Consulta(){
 		setToken(value);
 	}
 
-	function handlePlacaChange(e){
-		let value = e.target.value.toUpperCase();
+	// function handlePlacaChange(e){
+	// 	let value = e.target.value.toUpperCase();
 
-		value = value.replace(/[^A-Z0-9]/g, "");
+	// 	value = value.replace(/[^A-Z0-9]/g, "");
 
-		value = value.slice(0, 7);
+	// 	value = value.slice(0, 7);
 
-		setPlaca(value);
-	}
+	// 	setPlaca(value);
+	// }
 
 	function handleSubmit(e){
 		e.preventDefault();

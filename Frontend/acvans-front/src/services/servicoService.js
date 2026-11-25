@@ -1,6 +1,6 @@
 import api from "./api";
 
-export async function listarServicos(termo, pagian, tamnho = 10, sort){
+export async function listarServicos(termo, pagian, tamanho = 10, sort){
     const response = await api.get("/servicos", {params: {termo, page: pagian, size: tamanho, sort: sort}});
     return response.data;
 }

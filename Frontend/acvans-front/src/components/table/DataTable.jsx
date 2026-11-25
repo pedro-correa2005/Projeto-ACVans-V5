@@ -83,8 +83,8 @@ function DataTable({
                         }
 
                         {
-                            data.map(item => (
-                                <tr key={item?.id || Math.random()}>
+                            data.map((item, index) => (
+                                <tr key={item?.id ?? index}>
 
                                     {
                                         columns.map(column => {

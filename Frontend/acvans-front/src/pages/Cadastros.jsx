@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import DataTable from "../components/table/DataTable";
 import SearchBar from "../components/search/SearchBar";
@@ -38,18 +38,29 @@ function Cadastros() {
     const [veiculoSelecionado, setVeiculoSelecionado] = useState(null);
     const [veiculoInput, setVeiculoInput] = useState(null);
 
-    async function carregar() {
+    const carregar = useCallback(async () => {
         try {
-            const data = await listarCadastros(termo, pageNumber, 10, `${sortField},${sortDirection}`, filtroStatus);
+            const data = await listarCadastros(
+                termo,
+                pageNumber,
+                10,
+                `${sortField},${sortDirection}`,
+                filtroStatus
+            );
+
             setPage(data);
         } catch (error) {
             console.error(error);
         }
-    }
+    }, [termo, pageNumber, sortField, sortDirection, filtroStatus]);
 
     useEffect(() => {
-        carregar();
-    }, [termo, pageNumber, sortField, sortDirection, filtroStatus]);
+        const timeout = setTimeout(() => {
+            carregar();
+        }, 0);
+
+        return () => clearTimeout(timeout);
+    }, [carregar]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {

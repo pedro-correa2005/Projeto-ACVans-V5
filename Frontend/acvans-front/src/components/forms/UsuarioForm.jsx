@@ -8,8 +8,7 @@ function UsuarioForm({email, setEmail, doisFatores, setDoisFatores, roles, setRo
     ] = useState([]);
 
     const [
-        loading,
-        setLoading
+        loading
     ] = useState(false);
 
     async function carregarRoles(){
@@ -22,7 +21,12 @@ function UsuarioForm({email, setEmail, doisFatores, setDoisFatores, roles, setRo
     }
 
     useEffect(() => {
-        carregarRoles();
+        async function carregarDados() {
+            await Promise.all([
+                carregarRoles()
+            ]);
+        }
+        carregarDados();
     }, [])
 
     const handleCheckboxChange = (roleName) => {

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import { getCookie } from "../utils/cookies";
-import { logout } from "./authService";
 
 const apiUrl = "/api";
 
@@ -73,7 +72,7 @@ api.interceptors.response.use(
 
       //Tenta refresh
       try {
-        const response = await api.post("/auth/refresh");
+        await api.post("/auth/refresh");
         //Refresh sucesso: Faz novamente a requisição original
         return api(originalRequest);
       } catch (refreshError) {

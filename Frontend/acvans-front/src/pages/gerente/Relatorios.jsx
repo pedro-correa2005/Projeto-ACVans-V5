@@ -15,22 +15,28 @@ function Relatorios() {
     const [mes, setMes] = useState(new Date().getMonth() + 1);
     const [mediaEtapas, setMediaEtapas] = useState(null);
     const [loading, setLoading] = useState(false);
-
-    async function carregar() {
-        setLoading(true);
-        try {
-            const data = await getMediaEtapas(mes, ano);
-            setMediaEtapas(data);
-        } catch (error) {
-            console.error(error);
-            toast.error("Erro ao  buscar dados");
-        } finally {
-            setLoading(false);
-        }
-    }
-
+    
     useEffect(() => {
-        carregar();
+        let ativo = true;
+        const executar = async () => {
+            setLoading(true);
+            try {
+                const data = await getMediaEtapas(mes, ano);
+                if(!ativo) return;
+                setMediaEtapas(data);
+            } catch (error) {
+                if(ativo){
+                    console.error(error);
+                    toast.error("Erro ao  buscar dados");
+                }
+            } finally {
+                setLoading(false);
+            }
+        }
+        executar();
+        return () => {
+            ativo = false;
+        };
     }, [mes, ano]);
 
     return (
@@ -99,7 +105,7 @@ function Relatorios() {
                         <>
                             <h2>Relatórios de tempo</h2>
                             {
-                                mediaEtapas.map((tipoServico, i) => (
+                                mediaEtapas.map((tipoServico) => (
                                     (tipoServico.etapas.length > 0) && (
                                     <div className="card shadow-sm mb-4" key={tipoServico?.tipoServicoDescricao}>
                                         <div className="card-body">

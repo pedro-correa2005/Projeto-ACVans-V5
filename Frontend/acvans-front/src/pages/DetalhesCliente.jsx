@@ -37,7 +37,7 @@ function DetalhesCliente() {
     const [clienteInput, setClienteInput] = useState("");
     const [clienteSelecionado, setClienteSelecionado] = useState(null);
 
-    async function carregar() {
+    async function carregar(){
         try {
             const veiculosData = await listarVeiculoPorCliente(idCliente, termo, pageNumber, 10, `${sortField},${sortDirection}`);
             setPage(veiculosData);
@@ -49,8 +49,27 @@ function DetalhesCliente() {
     }
 
     useEffect(() => {
-        carregar();
-    }, [termo, pageNumber, sortField, sortDirection]);
+        let ativo = true;
+
+        const executar = async () => {
+            try {
+                const veiculosData = await listarVeiculoPorCliente(idCliente, termo,  pageNumber, 10, `${sortField}, ${sortDirection}`);
+                if(!ativo) return;
+                setPage(veiculosData);
+                const clienteData = await buscarCliente(idCliente);
+                if (!ativo) return;
+                setCliente(clienteData);
+            } catch (error) {
+                if (ativo) {
+                    console.error(error);
+                }
+            }
+        };
+        executar();
+        return () => {
+            ativo = false;
+        };
+    }, [termo, pageNumber, sortField, sortDirection, idCliente]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {

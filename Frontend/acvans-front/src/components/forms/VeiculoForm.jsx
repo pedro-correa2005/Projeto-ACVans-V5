@@ -3,7 +3,7 @@ import PlacaInput from "../input/PlacaInput";
 import { listarClientes } from "../../services/clienteService";
 import { useState } from "react";
 
-function VeiculoForm({placa, setPlaca, marca, setMarca, modelo, setModelo, clienteInput, setClienteInput, clienteSelecionado, setClienteSelecionado, editing}){
+function VeiculoForm({placa, setPlaca, marca, setMarca, modelo, setModelo, clienteInput, setClienteInput, setClienteSelecionado, editing}){
     const MARCAS = ["Mercedes-Benz", "Fiat", "Renault", "Ford", "Citroën", "Peugeot"];
     const [marcaSelect, setMarcaSelect] = useState("");
     return(
@@ -34,7 +34,7 @@ function VeiculoForm({placa, setPlaca, marca, setMarca, modelo, setModelo, clien
                             <option key={marcaOption} value={marcaOption}>{marcaOption}</option>
                         ))
                     }
-                    <option value="Outra" style={{fontWeight: "bold"},{color: "blue"}}>+ OUTRA (DIGITAR)</option>
+                    <option value="Outra" style={{fontWeight: "bold" , color: "blue"}}>+ OUTRA (DIGITAR)</option>
                 </select>
                 {
                     marcaSelect === "Outra" && (

@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 
 function AtualizarEtapa(){
     const navigate = useNavigate();
-    const [checkingToken, setCheckingToken] = useState(true);
+    const [setCheckingToken] = useState(true);
     const [ servico, setServico ] = useState(null);
     const [ etapa, setEtapa ] = useState(null);
     const [ loading, setLoading ] = useState(true);
@@ -40,12 +40,12 @@ function AtualizarEtapa(){
             }
         }
         validarToken();
-    }, [token, navigate]);
+    }, [token, navigate, setCheckingToken]);
 
     async function handleConfirmar(){
         setLoading(true);
         try {
-            const response = await atualizarEtapa(token);
+            await atualizarEtapa(token);
             toast.success("Etapa atualizada com sucesso");
             navigate("/");
         } catch (error) {
