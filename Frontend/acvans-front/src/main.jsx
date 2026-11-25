@@ -11,7 +11,7 @@ import App from './App.jsx'
 
 import {
   AuthProvider
-} from './context/authContext.jsx'
+} from './context/authProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
