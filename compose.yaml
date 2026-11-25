@@ -83,7 +83,7 @@ services:
             - "80:80"
         depends_on:
             backend:
-                condition: service_healthy
+                condition: service_started
 volumes:
     mariadb_data:
     redis_data:
