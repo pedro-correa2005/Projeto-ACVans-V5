@@ -45,6 +45,9 @@ jobs:
           cache: npm
           cache-dependency-path: Frontend/acvans-front/package-lock.json
       
+      - name: Configurar npm
+        run: npm install --global npm@11.6.2
+      
       - name: Instalar dependências
         run: npm ci
 
