@@ -1,0 +1,23 @@
+
+name: Runner Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verificar ambiente
+        run: |
+          echo "Gitea Runner funcionando!"
+          echo "Sistema:"
+          uname -a
+          echo "Data:"
+          date
+          echo "Diretório:"
+          pwd
