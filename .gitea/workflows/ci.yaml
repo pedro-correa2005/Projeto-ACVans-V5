@@ -68,11 +68,16 @@ jobs:
       - name: Preparar chave SSH
         run: |
           set -euo pipefail
+
           test -n "$VPS_DEPLOY_SSH_KEY"
+
           mkdir -p "$HOME/.ssh"
           chmod 700 "$HOME/.ssh"
-          printf '%s\n' "$VPS_DEPLOY_SSH_KEY" > "$HOME/.ssh/id_ed25519"
+
+          printf '%s' "$VPS_DEPLOY_SSH_KEY" | base64 --decode > "$HOME/.ssh/id_ed25519"
           chmod 600 "$HOME/.ssh/id_ed25519"
+
+          ssh-keygen -y -f "$HOME/.ssh/id_ed25519" > /dev/null
 
       - name: Validar identidade da VPS
         run: |
