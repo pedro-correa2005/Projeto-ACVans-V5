@@ -56,13 +56,42 @@ jobs:
         
       - name: Gerar build
         run: npm run build
-  connectivity:
-    name: Testar conexão com VPS
+  deploy:
+    name: Deploy - VPS
     runs-on: ubuntu-latest
     needs: [backend, frontend]
+
+    env:
+      VPS_DEPLOY_SSH_KEY: ${{ secrets.VPS_DEPLOY_SSH_KEY }}
+
     steps:
-      - name: Verificar acesso SSH à VPS
-        run: | 
-          sudo apt-get update
-          sudo apt-get install -y netcat-openbsd
-          nc -vz -w 5 100.105.196.82 22
+      - name: Preparar chave SSH
+        run: |
+          set -euo pipefail
+          test -n "$VPS_DEPLOY_SSH_KEY"
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf '%s\n' "$VPS_DEPLOY_SSH_KEY" > "$HOME/.ssh/id_ed25519"
+          chmod 600 "$HOME/.ssh/id_ed25519"
+
+      - name: Validar identidade da VPS
+        run: |
+          set -euo pipefail
+
+          ssh-keyscan -T 5 -p 22 -t ed25519 100.105.196.82 \
+            > "$HOME/.ssh/known_hosts" 2>/dev/null
+
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+          ssh-keygen -lf "$HOME/.ssh/known_hosts" | grep -F \
+            'SHA256:sGEX3V3vtm4hsQp2Po+b4xqUt8cA5R4hcx0oh/jhGj4'
+
+      - name: Executar deploy
+        run: |
+          ssh \
+            -i "$HOME/.ssh/id_ed25519" \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
+            acvans-deploy@100.105.196.82
